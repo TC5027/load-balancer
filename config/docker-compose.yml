@@ -2,7 +2,7 @@ services:
  load-balancer:
   build: ./load-balancer
   volumes:
-   - ../lb-from-scratch:/load-balancer
+   - ../src:/load-balancer
   privileged: true
   tty: true
   container_name: LB

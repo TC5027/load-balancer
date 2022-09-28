@@ -24,8 +24,8 @@ for container_data in output[1:]:
 
 
 print(map_name_last_digit_ip)
-with open('../lb-from-scratch/xdp_lb_kern.c') as c_file:
-	with open('../lb-from-scratch/xdp_lb_kern.c.tmp', 'w') as new_c_file:
+with open('../src/xdp_lb_kern.c') as c_file:
+	with open('../src/xdp_lb_kern.c.tmp', 'w') as new_c_file:
 		for line in c_file:
 			if line.startswith("#define"):
 				if line.split()[1] in map_name_last_digit_ip:
@@ -35,3 +35,4 @@ with open('../lb-from-scratch/xdp_lb_kern.c') as c_file:
 			else:
 				new_c_file.write(line)
 
+# now I must replace xdp_lb_kern.c with the tmp file
