@@ -35,4 +35,3 @@ with open('../src/xdp_lb_kern.c') as c_file:
 			else:
 				new_c_file.write(line)
 
-# now I must replace xdp_lb_kern.c with the tmp file

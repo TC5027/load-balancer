@@ -25,4 +25,13 @@ In a third terminal:
 sudo docker exec -it CONTAINER_ID_OF_CLIENT bash
 curl IP_ADDRESS_OF_LB
 
-(you can get container ip address doing sudo docker inspect d7f38f660b68 | grep IPAddress)
+(you can get container ip address doing sudo docker inspect CONTAINER_ID | grep IPAddress)
+
+
+cd src/libbpf et git submodule init et git submodule update
+cd config et ./launch.sh
+ouvrir un terminal et faire l.11 de launch.sh
+ouvrir un terminal et faire cd config et l.12 de launch.sh
+dans le premier terminal faire les lignes 15 et 16 de launch.sh
+dans le premier terminal chercher l'ip du lb avec sudo docker ps et sudo docker inspect ID | grep IPAddress
+dans le deuxieme terminal faire curl cet ip
