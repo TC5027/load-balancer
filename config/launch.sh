@@ -13,6 +13,6 @@ sudo docker run -dit --privileged -v $PWD/../src:/load-balancer --name LB lb
 ./rename.py
 mv ../src/xdp_lb_kern.c.tmp ../src/xdp_lb_kern.c
 sudo docker exec LB bash -c 'cd load-balancer ; make'
-ip_lb=$(sudo docker inspect LB | grep IPAddress)
+ip_lb=$(sudo docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' LB)
 echo "ip address of the load-balancer is: $ip_lb"
 
