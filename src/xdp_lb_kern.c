@@ -15,6 +15,9 @@ int xdp_load_balancer(struct xdp_md *ctx)
 
     bpf_printk("got something");
 
+    /*
+    First we check if the received packet is a TCP one
+    */
     struct ethhdr *eth = data;
     if (data + sizeof(struct ethhdr) > data_end)
         return XDP_ABORTED;
@@ -31,6 +34,10 @@ int xdp_load_balancer(struct xdp_md *ctx)
 
     bpf_printk("Got TCP packet from %x", iph->saddr);
 
+    /*
+    If the source address matches client IP then we modify the destination address to either backend A or B
+    Else (which means the source address matches IP of backend A or B) we modify the destination address to client
+    */
     if (iph->saddr == IP_ADDRESS(CLIENT))
     {
         char be = BACKEND_A;
@@ -45,6 +52,11 @@ int xdp_load_balancer(struct xdp_md *ctx)
         iph->daddr = IP_ADDRESS(CLIENT);
         eth->h_dest[5] = CLIENT;
     }
+    /*
+    We update the source address to the one from the load-balancer
+    We update the checksum given the modification we have performed
+    We return XDP_TX so that the packet is bounced back to the NIC, to get to its new destination
+    */
     iph->saddr = IP_ADDRESS(LB);
     eth->h_source[5] = LB;
 
